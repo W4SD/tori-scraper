@@ -32,23 +32,22 @@ for i,listing in enumerate(listings, start=1):
     # link to image of listing as URL (https://www.tori.fi/...)
     image_link = listing.find('div', class_="item_image_div").img['src']
 
-    # scrape listing page and get the date listing was posted as custom date string (5 toukokuuta 23:02)
-    listing_page = BS(requests.get(product_link).text, "html.parser")
-    listing_page_date = listing_page.find('table', class_="tech_data").tr.find_all('td')[-1].get_text()
+    listing_date = listing.find('div', class_="date_image").contents[0]
 
     # If listing is over 24h old, STOP!
-    date = get_datetime(listing_page_date)
-    is_over_24h = runtime - date
-    if is_over_24h.days >= 1:
+    date = get_datetime2(listing_date)
+    over_24h = runtime - date
+    print(f'is_over24h: {over_24h.days}')
+    if over_24h.days >= 1:
         break
-else:
+    else:
         items = {
             "id": id,
             "title": title,
             "price": price,
             "product_link": product_link,
             "image_link": image_link,
-            # "time_stamp": date.strftime('%d.%m.%Y %H:%M')
+            "time_stamp": date.strftime('%d.%m.%Y %H:%M')
         }
         product_listing[id] = items
 

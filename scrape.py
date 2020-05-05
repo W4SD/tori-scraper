@@ -3,6 +3,7 @@ from time import sleep
 from datetime import datetime
 from bs4 import BeautifulSoup as BS
 from format_date import get_datetime
+from format_date2 import get_datetime2
 import json
 
 runtime = datetime.now()
@@ -40,14 +41,14 @@ for i,listing in enumerate(listings, start=1):
     is_over_24h = runtime - date
     if is_over_24h.days >= 1:
         break
-    else:
+else:
         items = {
             "id": id,
             "title": title,
             "price": price,
             "product_link": product_link,
             "image_link": image_link,
-            "time_stamp": date.strftime('%d.%m.%Y %H:%M')
+            # "time_stamp": date.strftime('%d.%m.%Y %H:%M')
         }
         product_listing[id] = items
 

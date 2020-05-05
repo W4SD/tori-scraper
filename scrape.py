@@ -13,14 +13,28 @@ listings = page.find_all('a', class_='item_row_flex')
 
 listing = listings[1]
 
-id = listing.get('id') # 'item_1234567'
-title = listing.find('div', class_="li-title").contents[0] # 'Kattovalaisin Kruunu'
+# for listing in listings:
+
+# id element from listing as string (item_1234567)
+id = listing.get('id')
+
+# title of listing as string ('Kattovalaisin Kruunu')
+title = listing.find('div', class_="li-title").contents[0]
+
+# price of listing as string (42€), spaces removed
 price = listing.find('p', class_="list_price").contents[0].replace(" ", "") # '42€'
-product_link = listing.get('href') # https://www.tori.fi/...
-image_link = listing.find('div', class_="item_image_div").img['src'] # https://www.tori.fi/...
 
+# link to listing as URL (https://www.tori.fi/...)
+product_link = listing.get('href')
 
-print(f'Image src: {image_link} type: {type(image_link)}')
+# link to image of listing as URL (https://www.tori.fi/...)
+image_link = listing.find('div', class_="item_image_div").img['src']
+
+# scrape listing page and get the date listing was posted as custom date string (5 toukokuuta 23:02)
+listing_page = BS(requests.get(product_link).text, "html.parser")
+listing_page_date = listing_page.find('table', class_="tech_data").tr.find_all('td')[-1].get_text()
+print(f'{listing_page_date}')
+
 print(f'Link: {product_link} type: {type(product_link)}')
 
 # print(len(listings), listings[1])

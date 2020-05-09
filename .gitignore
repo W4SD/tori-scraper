@@ -126,5 +126,6 @@ dmypy.json
 .idea/
 
 bot-token.txt
+TOKEN
 
 testiBot/

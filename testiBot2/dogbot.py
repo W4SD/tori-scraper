@@ -4,6 +4,7 @@ import re
 
 def get_url():
     contents = requests.get('https://random.dog/woof.json').json()
+    print(contents)
     url = contents['url']
     return url
 
@@ -19,5 +20,7 @@ def main():
     updater.start_polling()
     updater.idle()
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
+
+print(get_url())

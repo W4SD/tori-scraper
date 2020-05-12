@@ -31,6 +31,7 @@ def delete_sent_messages(context):
         # time.sleep(4)
 
     sent_message_ids.clear()
+    print("Deleted messages!")
 
 
 def photo_text(context):
@@ -39,6 +40,7 @@ def photo_text(context):
     delete_sent_messages(context)
 
     data = json.loads(get_listing_items())
+    print("Got new items to display!")
     # delete_sent_messages(context)
 
     # with open('json_item_test.json','r') as json_file:
@@ -51,7 +53,7 @@ def photo_text(context):
 
     for item_id in data:
         time.sleep(4)
-        print(item_id)
+        # print(item_id)
         item_desc = (
             f"{data[item_id]['title']}"
             "\n"
@@ -69,13 +71,16 @@ def photo_text(context):
                                          parse_mode='html',
                                          )
             sent_message_ids.append(msg['message_id'])
+            if len(sent_message_ids) > 10:
+                break
 
         except TelegramError:
             pass
 
     msg = context.bot.send_message(chat_id=CHANNEL,
                                    text=f"Uusia ilmoituksia: {len(sent_message_ids)}")
-    sent_message_ids.append(msg)
+    sent_message_ids.append(msg['message_id'])
+    print("Daily items listed!")
 
 
 def main():
@@ -88,6 +93,7 @@ def main():
     daily_lamps = job_queue.run_daily(photo_text,time_object)
 
     run_once = job_queue.run_once(i_am_alive, 0)
+    run_on_start = job_queue.run_once(photo_text, 0)
 
     updater.idle()
 

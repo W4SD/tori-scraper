@@ -10,7 +10,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                      level=logging.INFO)
 
 # API TOKEN
-with open('TOKEN') as f: TOKEN = f.readline()
+with open('TOKEN') as f: TOKEN = f.readline().rstrip()
 # Channel ID
 with open('Channel_ID') as c: CHANNEL = c.readline()
 
@@ -71,8 +71,6 @@ def photo_text(context):
                                          parse_mode='html',
                                          )
             sent_message_ids.append(msg['message_id'])
-            if len(sent_message_ids) > 10:
-                break
 
         except TelegramError:
             pass
@@ -96,9 +94,6 @@ def main():
     run_on_start = job_queue.run_once(photo_text, 0)
 
     updater.idle()
-
-# run_daily
-# https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.jobqueue.html
 
 
 if __name__ == '__main__':

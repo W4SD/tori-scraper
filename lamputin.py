@@ -20,7 +20,7 @@ run_time = '04:00:00'
 time_object = datetime.strptime(run_time, '%H:%M:%S').time()
 
 def i_am_alive(context):
-    context.bot.send_message(chat_id=CHANNEL, text="I AM ALIVE!")
+    context.bot.send_message(chat_id=CHANNEL, text=f"I AM ALIVE! Tänään on {datetime.today()}")
 
 
 def delete_sent_messages(context):
@@ -88,15 +88,17 @@ def main():
 
     updater.start_polling()
 
-    daily_lamps = job_queue.run_daily(photo_text,time_object)
+    # daily_lamps = job_queue.run_daily(photo_text,time_object)
 
     run_once = job_queue.run_once(i_am_alive, 0)
     run_on_start = job_queue.run_once(photo_text, 0)
 
-    updater.idle()
+    updater.stop()
 
 
 if __name__ == '__main__':
+    print(f"Today is: {datetime.today()}")
     main()
+    print("----------------END----------------")
 
 

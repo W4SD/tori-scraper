@@ -13,7 +13,7 @@ def get_listing_items():
 
     while is_under24h:
 
-        URL = 'https://www.tori.fi/uusimaa/sisustus_ja_huonekalut/valaisimet?ca=18&cg=3020&st=s&c=3027&ps=0&pe=9&w=1&o=' + str(URL_page_no)
+        URL = 'https://www.tori.fi/uusimaa/sisustus_ja_huonekalut/valaisimet?ca=18&cg=3020&st=s&c=3027&f=p&w=' + str(URL_page_no)
         print(URL)
         response = requests.get(URL)
 
